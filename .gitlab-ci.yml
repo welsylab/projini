@@ -45,8 +45,8 @@ sonarcloud-check:
     #
     # Using GitLab predefined variables as examples - replace if your SonarCloud keys are different:
     SONAR_ORGANIZATION_KEY: $CI_PROJECT_NAMESPACE # Example: Use GitLab namespace as organization key
-    SONAR_PROJECT_KEY: $CI_PROJECT_PATH_SLUG      # Example: Use GitLab project path slug as project key
-    SONAR_TOKEN: $SONAR_SONARCLOUD_TOKEN         # This should be a masked secret variable in GitLab CI/CD settings
+    SONAR_PROJECT_KEY: $CI_PROJECT_PATH_SLUG # Example: Use GitLab project path slug as project key
+    SONAR_TOKEN: $SONAR_SONARCLOUD_TOKEN # This should be a masked secret variable in GitLab CI/CD settings
   script:
     - echo "Running SonarCloud analysis..."
     - |
@@ -58,6 +58,6 @@ sonarcloud-check:
         -Dsonar.login=$SONAR_TOKEN
   only:
     - merge_requests
-    - master
+    - main
     - develop
   allow_failure: false

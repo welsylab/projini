@@ -79,3 +79,6 @@ tmp/
 
 # Ignore jj-related internal files
 .jj/
+
+# Qodo
+.qodo/

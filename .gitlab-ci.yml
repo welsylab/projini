@@ -1,0 +1,32 @@
+image: rust:latest
+
+stages:
+  - build
+  - test
+
+variables:
+  CARGO_TERM_COLOR: always
+
+fmt:
+  stage: build
+  script:
+    - rustup component add rustfmt
+    - cargo fmt --all -- --check
+  allow_failure: true
+
+clippy:
+  stage: build
+  script:
+    - rustup component add clippy
+    - cargo clippy --workspace --all-targets --all-features -- -D warnings
+  allow_failure: true
+
+build:
+  stage: build
+  script:
+    - cargo build --workspace
+
+test:
+  stage: test
+  script:
+    - cargo test --workspace

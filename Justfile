@@ -1,14 +1,12 @@
-def remotes():
-    output = run("git remote -v")
-    lines = output.splitlines()
-    remote_names = set()
-    for line in lines:
-        parts = line.split()
-        if len(parts) >= 2:
-            remote_names.add(parts[0])
-    return list(remote_names)
+push:
+    git push origin && git push public && git push projprod
 
-push-all:
-    @for remote in remotes():
-        @echo "Pushing to {remote}..."
-        @git push $$remote --all
+coverage:
+    cargo llvm-cov --workspace --packages core tui --cobertura --output-path coverage/cobertura.xml
+
+run-clippy-and-convert:
+    cargo clippy --workspace --message-format json > clippy-report.json && cargo sonar --issues clippy --clippy-path clippy-report.json
+
+default:
+    @just --list
+

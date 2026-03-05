@@ -40,7 +40,6 @@ sonarcloud-check:
     - echo "Running SonarCloud analysis..."
     - |
       sonar-scanner
-        -Dsonar.organization.key=welsy
         -Dsonar.projectKey=meemy-group_projini
         -Dsonar.sources=.
         -Dsonar.host.url=https://sonarcloud.io

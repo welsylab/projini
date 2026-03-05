@@ -3,6 +3,7 @@ image: rust:latest
 stages:
   - build
   - test
+  - sonarcloud-check
 
 variables:
   CARGO_TERM_COLOR: always

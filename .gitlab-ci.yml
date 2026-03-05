@@ -3,7 +3,6 @@ image: rust:latest
 stages:
   - build
   - test
-  - code_quality # Renamed stage for clarity
 
 variables:
   CARGO_TERM_COLOR: always
@@ -36,7 +35,7 @@ test:
 
 # SonarCloud check
 sonarcloud-check:
-  stage: code_quality # Use the new stage name
+  stage: test # Moved to the test stage
   image: sonarsource/sonar-scanner-cli:latest
   variables:
     # These variables should be configured in your GitLab CI/CD settings:
@@ -51,17 +50,14 @@ sonarcloud-check:
   script:
     - echo "Running SonarCloud analysis..."
     - |
-      sonar-scanner \
-        -Dsonar.organization.key=$SONAR_ORGANIZATION_KEY \
-        -Dsonar.projectKey=$SONAR_PROJECT_KEY \
-        -Dsonar.sources=. \
-        -Dsonar.host.url=https://sonarcloud.io \
+      sonar-scanner 
+        -Dsonar.organization.key=$SONAR_ORGANIZATION_KEY 
+        -Dsonar.projectKey=$SONAR_PROJECT_KEY 
+        -Dsonar.sources=. 
+        -Dsonar.host.url=https://sonarcloud.io 
         -Dsonar.login=$SONAR_TOKEN
-  # The original config had `only: [merge_requests, master, develop]` and `allow_failure: true`.
-  # I'll keep `allow_failure: true` for now, but suggest the user review it.
-  # `only` clause might need adjustment based on desired behavior.
   only:
     - merge_requests
     - master
     - develop
-  allow_failure: true
+  allow_failure: false

@@ -6,7 +6,7 @@ stages:
 
 variables:
   CARGO_TERM_COLOR: always
-  # SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # This is often handled by the scanner image, but can be kept if needed for caching
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
   GIT_DEPTH: "0"
 
 fmt:
@@ -36,10 +36,6 @@ test:
 sonarcloud-check:
   stage: test
   image: sonarsource/sonar-scanner-cli:latest
-  variables:
-    SONAR_ORGANIZATION_KEY: $CI_PROJECT_NAMESPACE
-    SONAR_PROJECT_KEY: $CI_PROJECT_PATH_SLUG
-    SONAR_TOKEN: $SONAR_TOKEN
   script:
     - echo "Running SonarCloud analysis..."
     - |

@@ -33,28 +33,21 @@ test:
   script:
     - cargo test --workspace
 
-# SonarCloud check
 sonarcloud-check:
-  stage: test # Moved to the test stage
+  stage: test
   image: sonarsource/sonar-scanner-cli:latest
   variables:
-    # These variables should be configured in your GitLab CI/CD settings:
-    # - SONAR_TOKEN: A secret token for SonarCloud authentication.
-    # - SONAR_ORGANIZATION_KEY: Your SonarCloud organization key.
-    # - SONAR_PROJECT_KEY: Your SonarCloud project key.
-    #
-    # Using GitLab predefined variables as examples - replace if your SonarCloud keys are different:
-    SONAR_ORGANIZATION_KEY: $CI_PROJECT_NAMESPACE # Example: Use GitLab namespace as organization key
-    SONAR_PROJECT_KEY: $CI_PROJECT_PATH_SLUG # Example: Use GitLab project path slug as project key
-    SONAR_TOKEN: $SONAR_SONARCLOUD_TOKEN # This should be a masked secret variable in GitLab CI/CD settings
+    SONAR_ORGANIZATION_KEY: $CI_PROJECT_NAMESPACE
+    SONAR_PROJECT_KEY: $CI_PROJECT_PATH_SLUG
+    SONAR_TOKEN: $SONAR_TOKEN
   script:
     - echo "Running SonarCloud analysis..."
     - |
-      sonar-scanner 
-        -Dsonar.organization.key=$SONAR_ORGANIZATION_KEY 
-        -Dsonar.projectKey=$SONAR_PROJECT_KEY 
-        -Dsonar.sources=. 
-        -Dsonar.host.url=https://sonarcloud.io 
+      sonar-scanner
+        -Dsonar.organization.key=welsy
+        -Dsonar.projectKey=meemy-group_projini
+        -Dsonar.sources=.
+        -Dsonar.host.url=https://sonarcloud.io
         -Dsonar.login=$SONAR_TOKEN
   only:
     - merge_requests
